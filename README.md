@@ -19,6 +19,42 @@ A secure password generator that creates both **Diceware-style passphrases** and
   - Adjustable symbol and uppercase letter insertion
   - Batch generation support
 
+## Security Considerations
+
+### Why Diceware?
+- **Memorable**: Easier to remember than random characters
+- **Secure**: 6 words = ~77 bits of entropy
+- **Practical**: Can be typed accurately without copy-paste
+
+### Why Traditional?
+- **Maximum entropy**: Pure randomness
+- **Length-constrained**: When you have character limits
+- **Symbol requirements**: Meets strict password policies
+
+### Best Practices
+
+1. **Passphrase strength**: Use at least 6 words for Diceware
+   ```bash
+   ./genpass.py diceware -w 6
+   ```
+
+2. **Traditional password strength**: Use at least 16 characters
+   ```bash
+   ./genpass.py traditional -l 16
+   ```
+
+3. **Add complexity**: Mix in symbols and capitals
+   ```bash
+   ./genpass.py diceware -w 6 -s 2 -c 2
+   ```
+
+4. **Secure storage**: Always encrypt saved passwords
+   ```bash
+   ./genpass.py traditional -n 10 -o vault.enc --encrypt
+   ```
+
+5. **Never reuse**: Generate unique passwords for each service
+
 ## Installation
 
 1. **Basic usage** (no encryption):
@@ -39,6 +75,43 @@ project/
 ├── diceware.wordlist.asc         # English wordlist
 ├── diceware_jp.txt               # Japanese wordlist (optional)
 └── DW-Espanol-1.txt              # Spanish wordlist (optional)
+```
+
+## Command Reference
+
+### Diceware Mode
+```
+genpass.py diceware [OPTIONS]
+
+Options:
+  -n, --num-phrases NUM     Number of passphrases (default: 1)
+  -w, --words NUM           Words per passphrase (default: 6)
+  -s, --symbols NUM         Random symbols to insert (default: 0)
+  -c, --capitals NUM        Letters to capitalize (default: 0)
+  --wordlists FILES         Custom wordlist files
+  --mask                    Mask output initially
+  -o, --output FILE         Save to file
+  --encrypt                 Encrypt output file
+```
+
+### Traditional Mode
+```
+genpass.py traditional [OPTIONS]
+
+Options:
+  -n, --num-passwords NUM   Number of passwords (default: 1)
+  -l, --length NUM          Password length (default: 16)
+  -d, --min-digits NUM      Minimum digits (default: 2)
+  -s, --min-symbols NUM     Minimum symbols (default: 2)
+  -u, --min-uppercase NUM   Minimum uppercase (default: 2)
+  --mask                    Mask output initially
+  -o, --output FILE         Save to file
+  --encrypt                 Encrypt output file
+```
+
+### Decrypt Mode
+```
+genpass.py decrypt FILE
 ```
 
 ## Usage Examples
@@ -188,79 +261,6 @@ Generate very long, complex passwords:
 ```bash
 ./genpass.py traditional -l 32 -d 6 -s 6 -u 6
 ```
-
-## Command Reference
-
-### Diceware Mode
-```
-genpass.py diceware [OPTIONS]
-
-Options:
-  -n, --num-phrases NUM     Number of passphrases (default: 1)
-  -w, --words NUM           Words per passphrase (default: 6)
-  -s, --symbols NUM         Random symbols to insert (default: 0)
-  -c, --capitals NUM        Letters to capitalize (default: 0)
-  --wordlists FILES         Custom wordlist files
-  --mask                    Mask output initially
-  -o, --output FILE         Save to file
-  --encrypt                 Encrypt output file
-```
-
-### Traditional Mode
-```
-genpass.py traditional [OPTIONS]
-
-Options:
-  -n, --num-passwords NUM   Number of passwords (default: 1)
-  -l, --length NUM          Password length (default: 16)
-  -d, --min-digits NUM      Minimum digits (default: 2)
-  -s, --min-symbols NUM     Minimum symbols (default: 2)
-  -u, --min-uppercase NUM   Minimum uppercase (default: 2)
-  --mask                    Mask output initially
-  -o, --output FILE         Save to file
-  --encrypt                 Encrypt output file
-```
-
-### Decrypt Mode
-```
-genpass.py decrypt FILE
-```
-
-## Security Considerations
-
-### Why Diceware?
-- **Memorable**: Easier to remember than random characters
-- **Secure**: 6 words = ~77 bits of entropy
-- **Practical**: Can be typed accurately without copy-paste
-
-### Why Traditional?
-- **Maximum entropy**: Pure randomness
-- **Length-constrained**: When you have character limits
-- **Symbol requirements**: Meets strict password policies
-
-### Best Practices
-
-1. **Passphrase strength**: Use at least 6 words for Diceware
-   ```bash
-   ./genpass.py diceware -w 6
-   ```
-
-2. **Traditional password strength**: Use at least 16 characters
-   ```bash
-   ./genpass.py traditional -l 16
-   ```
-
-3. **Add complexity**: Mix in symbols and capitals
-   ```bash
-   ./genpass.py diceware -w 6 -s 2 -c 2
-   ```
-
-4. **Secure storage**: Always encrypt saved passwords
-   ```bash
-   ./genpass.py traditional -n 10 -o vault.enc --encrypt
-   ```
-
-5. **Never reuse**: Generate unique passwords for each service
 
 ## Encryption Details
 
