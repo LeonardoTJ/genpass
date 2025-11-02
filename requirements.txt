@@ -1,0 +1,5 @@
+# Optional dependencies for advanced features
+
+# For encryption support (--encrypt flag)
+# Install with: pip install -r requirements.txt
+cryptography>=41.0.0
