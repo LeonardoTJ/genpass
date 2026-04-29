@@ -1,0 +1,27 @@
+magi:
+  enabled: true
+  nodes:
+    melchior: true
+    balthasar: true
+    casper: true
+  blockOn:        [UNANIMOUS_BLOCK, MELCHIOR_OVERRIDE]
+  warnOn:         [MAJORITY_BLOCK, UNANIMOUS_WARN]
+  humanReviewOn:  [DISPUTED]
+  ignorePaths:    ["*.md", "vendor/**", "*.lock"]
+  lorebookOverrides:
+    melchior:  ""    # optional per-node lorebook override
+    balthasar: ""
+    casper:    ""
+
+  # --- Provider routing (optional) ---------------------------------
+  # Per-provider connection settings. Anything omitted falls back to
+  # env vars; see the provider table below.
+  providers:
+    deepseek: {}
+
+  # Default model for any node that doesn't have an explicit override.
+  # If omitted entirely, falls back to anthropic + claude-sonnet-4-6.
+  defaultModel:
+    provider: deepseek
+    model:    deepseek-v4-flash
+
