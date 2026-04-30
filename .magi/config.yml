@@ -17,11 +17,13 @@ magi:
   # Per-provider connection settings. Anything omitted falls back to
   # env vars; see the provider table below.
   providers:
-    deepseek: {}
+    ollama:
+      baseUrl: http://localhost:11434      # or set OLLAMA_HOST
+
 
   # Default model for any node that doesn't have an explicit override.
   # If omitted entirely, falls back to anthropic + claude-sonnet-4-6.
   defaultModel:
-    provider: deepseek
-    model:    deepseek-v4-flash
+    provider: ollama
+    model:    qwen3-coder:480b-cloud
 
