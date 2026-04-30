@@ -1,4 +1,5 @@
 magi:
+  sequentialDispatch: true
   enabled: true
   nodes:
     melchior: true
