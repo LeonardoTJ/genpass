@@ -26,4 +26,8 @@ magi:
   defaultModel:
     provider: ollama
     model:    qwen3-coder:480b-cloud
+  nodeModels:
+    melchior:  { provider: ollama, model: qwen3-coder:480b-cloud, maxTokens: 4000 }
+    balthasar: { provider: ollama, model: qwen3.5:cloud }
+    casper:    { provider: ollama, model: qwen3.5:cloud }
 
