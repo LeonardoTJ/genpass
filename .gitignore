@@ -123,3 +123,10 @@ cython_debug/
 *.txt
 *.asc
 *.pdf
+
+# Versioned application resources and the maintained binary recipe.
+!genpass/data/eff_large_wordlist.txt
+!genpass/data/diceware_jp.txt
+!genpass/data/DW-Espanol-1.txt
+!packaging/genpass.spec
+.ruff_cache/

@@ -1,0 +1,81 @@
+[project]
+name = "genpass"
+version = "2.0.2"
+description = "Advanced password generator: Diceware passphrases and traditional random passwords with optional AES encryption."
+readme = "README.md"
+license = "MIT"
+authors = [{ name = "Leon" }]
+keywords = ["password", "diceware", "passphrase", "security", "crypto"]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Environment :: Console",
+    "Intended Audience :: End Users/Desktop",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+    "Topic :: Security :: Cryptography",
+]
+requires-python = ">=3.9.2"
+dependencies = []
+
+# Encryption (--encrypt / decrypt) is an optional feature. Users opt in
+# via the `encryption` extra; the CLI degrades gracefully without it.
+[project.optional-dependencies]
+encryption = ["cryptography>=44.0.0"]
+
+[project.scripts]
+genpass = "genpass.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/LeonardoTJ/genpass"
+"Bug Tracker" = "https://github.com/LeonardoTJ/genpass/issues"
+
+[build-system]
+requires = ["poetry-core>=2.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+# --- Poetry-specific packaging instructions -------------------------------
+# Bundle wordlists into both sdist and wheel so the package (and the
+# PyInstaller binary built from it) is self-contained / portable.
+[tool.poetry]
+packages = [{ include = "genpass" }]
+include = [
+    { path = "genpass/data/eff_large_wordlist.txt", format = ["sdist", "wheel"] },
+    { path = "genpass/data/diceware_jp.txt", format = ["sdist", "wheel"] },
+    { path = "genpass/data/DW-Espanol-1.txt", format = ["sdist", "wheel"] },
+    { path = "genpass/data/SHA256SUMS", format = ["sdist", "wheel"] },
+    { path = "genpass/data/README.md", format = ["sdist", "wheel"] },
+    { path = "packaging", format = "sdist" },
+    { path = "tests", format = "sdist" },
+    { path = "docs", format = "sdist" },
+    { path = "poetry.lock", format = "sdist" },
+    { path = "PROJECT_REVIEW.md", format = "sdist" },
+    { path = "IMPLEMENTATION.md", format = "sdist" },
+]
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.0"
+pytest-cov = "^5.0"
+ruff = "^0.5"
+# Used to produce a single portable binary from the installed package.
+# Restrict the build tool to its supported Python range. The build script
+# reports an explicit error if PyInstaller is unavailable on the interpreter.
+pyinstaller = { version = ">=6.21,<7.0", python = "<3.16" }
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+filterwarnings = ["error::pytest.PytestReturnNotNoneWarning"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py39"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP"]
+ignore = ["E501"]
